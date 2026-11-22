@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Felicia｜溫柔生活的人</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400..700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Serif+TC:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --linen: #efe9df;
+    --linen-deep: #e4dccd;
+    --moss: #3e4a3d;
+    --forest: #233029;
+    --forest-soft: #2e3d34;
+    --sage: #8a9a82;
+    --sage-tint: #d3d9c9;
+    --clay: #a8805c;
+    --sun: #e9b949;
+    --sun-soft: #f2dd9f;
+    --ink: #2b2f2a;
+    --muted: #63675e;
+    --font-en: "Cormorant Garamond", "Times New Roman", serif;
+    --font-zh: "Noto Serif TC", "PMingLiU", serif;
+    --font-num: "Bodoni Moda", "Cormorant Garamond", serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; overflow-x: hidden; }
+
+  body {
+    font-family: var(--font-zh);
+    font-weight: 300;
+    color: var(--ink);
+    background: var(--linen);
+    line-height: 2;
+    letter-spacing: 0.06em;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+
+  /* 細緻紙張顆粒 */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 100;
+    opacity: 0.08;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 2; }
+
+  /* ---------- 波西米亞幾何線條裝飾 ---------- */
+  .deco {
+    position: absolute;
+    z-index: 1;
+    pointer-events: none;
+    height: auto;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  /* 不論圖示大小，線條粗細一致 */
+  #boho-defs path, #boho-defs circle, #boho-defs rect { vector-effect: non-scaling-stroke; }
+
+  /* ---------- Hero ---------- */
+  .hero {
+    min-height: 100vh;
+    background:
+      radial-gradient(ellipse at 72% 22%, rgba(138,154,130,0.28), transparent 60%),
+      radial-gradient(ellipse at 8% 92%, rgba(233,185,73,0.12), transparent 55%),
+      var(--forest);
+    color: var(--linen);
+    display: flex;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero .wrap { width: 100%; }
+  .hero-eyebrow {
+    font-family: var(--font-en);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 1.15rem;
+    color: var(--sage);
+    letter-spacing: 0.22em;
+    margin-bottom: 1rem;
+  }
+  .hero h1 {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: clamp(4.5rem, 15vw, 11rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+  }
+  .hero h1 span { color: var(--sun); }
+  .hero-line {
+    width: 72px; height: 6px;
+    margin: 2.4rem 0 2rem;
+    background: radial-gradient(circle, var(--sun) 3px, transparent 3.5px) 0 0 / 18px 6px repeat-x;
+  }
+  .hero-tagline {
+    font-size: clamp(1.15rem, 2.6vw, 1.5rem);
+    letter-spacing: 0.32em;
+    color: #e3ddd0;
+  }
+  .hero-sub {
+    margin-top: 0.6rem;
+    font-size: 0.95rem;
+    color: var(--sage);
+    letter-spacing: 0.22em;
+  }
+  .scroll-hint {
+    position: absolute; left: 50%; bottom: 34px;
+    transform: translateX(-50%);
+    font-family: var(--font-en);
+    font-size: 0.78rem; letter-spacing: 0.4em;
+    color: var(--sun);
+    text-decoration: none;
+    display: flex; flex-direction: column; align-items: center; gap: 10px;
+    z-index: 3;
+  }
+  .scroll-hint::after {
+    content: ""; width: 1px; height: 44px;
+    background: linear-gradient(var(--sun), transparent);
+    animation: drip 2.4s ease-in-out infinite;
+  }
+  @keyframes drip {
+    0% { transform: scaleY(0); transform-origin: top; }
+    50% { transform: scaleY(1); transform-origin: top; }
+    51% { transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ---------- 共用段落 ---------- */
+  section { padding: 120px 0; position: relative; overflow: hidden; }
+  .label {
+    font-family: var(--font-en);
+    font-style: italic;
+    font-weight: 400;
+    color: var(--clay);
+    font-size: 1.05rem;
+    letter-spacing: 0.18em;
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 0.8rem;
+  }
+  .label::before {
+    content: ""; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--sun);
+    box-shadow: 18px 0 0 -2px var(--sun-soft);
+    margin-right: 18px;
+  }
+  h2 {
+    font-weight: 400;
+    font-size: clamp(1.7rem, 3.6vw, 2.4rem);
+    letter-spacing: 0.18em;
+    color: var(--moss);
+    margin-bottom: 2.2rem;
+    line-height: 1.6;
+  }
+
+  /* ---------- 關於 ---------- */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.3fr;
+    gap: 72px;
+    align-items: center;
+  }
+  .portrait-box { position: relative; }
+  .portrait {
+    aspect-ratio: 3 / 4;
+    border-radius: 999px 999px 18px 18px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 30px 60px -30px rgba(35,48,41,0.55);
+  }
+  .portrait > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .portrait-caption {
+    position: absolute; bottom: 18px; right: 16px;
+    white-space: nowrap;
+    font-family: var(--font-en); font-style: italic; font-weight: 500;
+    color: var(--linen); letter-spacing: 0.2em; font-size: 1.05rem;
+    background: rgba(35,48,41,0.82);
+    padding: 3px 20px 4px;
+    border-radius: 999px;
+    backdrop-filter: blur(3px);
+  }
+  .shell-badge {
+    position: absolute;
+    left: 27%; top: 88%;
+    width: 72px; height: 72px;
+    margin: -36px 0 0 -36px;
+    background: var(--sun);
+    border-radius: 58% 42% 55% 45% / 48% 58% 42% 52%;
+    display: grid; place-items: center;
+    box-shadow: 0 14px 30px -12px rgba(35,48,41,0.45);
+    animation: bob 5s ease-in-out infinite alternate;
+  }
+  .shell-badge svg { width: 40px; height: 40px; stroke: var(--forest); fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+  @keyframes bob {
+    from { transform: translateY(0) rotate(-6deg); }
+    to   { transform: translateY(-10px) rotate(6deg); }
+  }
+  .camino-note {
+    margin-top: 28px;
+    padding: 20px 24px 18px;
+    background: var(--linen-deep);
+    border-radius: 26px 8px 30px 12px / 14px 26px 10px 28px;
+    position: relative;
+  }
+  .camino-note .tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--font-en); font-style: italic;
+    font-size: 0.9rem; color: var(--forest);
+    background: var(--sun);
+    padding: 2px 14px 2px 10px;
+    border-radius: 999px;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .camino-note .tag svg { width: 16px; height: 16px; fill: var(--forest); }
+  .camino-note p { font-size: 0.95rem; color: var(--moss); line-height: 1.9; }
+
+  .about-text p { color: var(--muted); margin-bottom: 1.3rem; text-align: justify; }
+  .about-text p strong {
+    color: var(--moss); font-weight: 500;
+    background: linear-gradient(transparent 58%, var(--sun-soft) 58%);
+    padding: 0 3px;
+  }
+
+  /* ---------- 喜歡的事 ---------- */
+  .loves { background: var(--linen-deep); }
+  .loves-head { text-align: center; }
+  .loves-head .label { justify-content: center; }
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 26px;
+    margin-top: 1rem;
+  }
+  .card {
+    --bg: var(--linen); --fg: var(--moss); --txt: var(--muted); --blob: var(--sun-soft); --icon: var(--moss); --no: var(--clay);
+    background: var(--bg);
+    padding: 44px 34px 40px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(.3,1.4,.5,1), box-shadow 0.6s ease;
+    box-shadow: 0 18px 40px -28px rgba(35,48,41,0.45);
+  }
+  .card:nth-child(1) { border-radius: 42px 14px 38px 18px / 22px 40px 16px 36px;
+    --blob: var(--sage-tint); }
+  .card:nth-child(2) { border-radius: 16px 46px 20px 40px / 38px 18px 42px 20px;
+    --bg: var(--moss); --fg: var(--linen); --txt: #d6d2c6; --blob: var(--linen); --icon: var(--moss); --no: var(--sun); }
+  .card:nth-child(3) { border-radius: 36px 20px 48px 12px / 18px 44px 20px 40px;
+    --bg: var(--sage-tint); --blob: var(--sun); }
+  .card:nth-child(4) { border-radius: 20px 40px 14px 46px / 42px 16px 38px 18px;
+    --bg: var(--sage-tint); --blob: var(--sun-soft); }
+  .card:nth-child(5) { border-radius: 48px 16px 30px 24px / 26px 38px 18px 44px;
+    --blob: var(--sun); }
+  .card:nth-child(6) { border-radius: 14px 38px 44px 18px / 40px 22px 16px 42px;
+    --bg: var(--sun-soft); --blob: var(--linen); --no: var(--moss); }
+  .card:nth-child(odd):hover  { transform: translateY(-8px) rotate(-1.2deg); }
+  .card:nth-child(even):hover { transform: translateY(-8px) rotate(1.2deg); }
+  .card:hover { box-shadow: 0 28px 50px -26px rgba(35,48,41,0.55); }
+
+  .card-no {
+    font-family: var(--font-en); font-style: italic;
+    font-size: 0.95rem; color: var(--no);
+    letter-spacing: 0.12em;
+    position: absolute; top: 22px; right: 28px;
+  }
+  .icon {
+    width: 70px; height: 70px;
+    display: grid; place-items: center;
+    background: var(--blob);
+    border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%;
+    margin-bottom: 22px;
+    transition: border-radius 1.2s ease, transform 0.6s ease;
+  }
+  .card:hover .icon { border-radius: 42% 58% 38% 62% / 58% 40% 60% 42%; transform: rotate(-8deg); }
+  .icon svg {
+    width: 40px; height: 40px;
+    stroke: var(--icon); fill: none; stroke-width: 1.3;
+    stroke-linecap: round; stroke-linejoin: round;
+  }
+  .card h3 {
+    font-weight: 500; font-size: 1.15rem;
+    letter-spacing: 0.2em; color: var(--fg);
+    margin-bottom: 0.5rem;
+  }
+  .card h3 small {
+    display: block;
+    font-family: var(--font-en); font-style: italic; font-weight: 400;
+    font-size: 0.88rem; color: var(--no); letter-spacing: 0.08em;
+  }
+  .card p { font-size: 0.95rem; color: var(--txt); line-height: 1.9; }
+
+  .beauty-note {
+    text-align: center;
+    margin-top: 72px;
+    font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+    color: var(--moss);
+    letter-spacing: 0.22em;
+  }
+  .beauty-note em {
+    font-style: normal; font-weight: 500;
+    text-decoration: underline wavy var(--sun);
+    text-decoration-thickness: 2px;
+    text-underline-offset: 9px;
+  }
+
+  /* ---------- 十年 ---------- */
+  .decade {
+    background: var(--forest);
+    color: var(--linen);
+  }
+  .decade-grid {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .big-num { text-align: center; }
+  .big-num .num {
+    font-family: var(--font-num);
+    font-weight: 500;
+    font-size: clamp(9rem, 22vw, 15rem);
+    line-height: 0.85;
+    color: transparent;
+    -webkit-text-stroke: 1.5px var(--sun);
+    position: relative;
+    display: inline-block;
+    letter-spacing: -0.01em;
+  }
+  .big-num .num::after {
+    content: "";
+    position: absolute; right: -14px; top: 4px;
+    width: 26px; height: 26px; border-radius: 50%;
+    background: var(--sage);
+  }
+  .big-num .unit {
+    display: block;
+    color: var(--sage);
+    font-size: 1.05rem; letter-spacing: 0.6em;
+    margin-top: 1.6rem;
+  }
+  .decade-text { position: relative; z-index: 0; }
+  .decade h2 { color: var(--linen); }
+  .decade p { color: #cdc8bb; margin-bottom: 1.2rem; }
+  .vows { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 2rem; }
+  .vow {
+    border: 1px solid rgba(239,233,223,0.3);
+    padding: 6px 22px;
+    border-radius: 999px 600px 999px 700px;
+    font-size: 0.92rem;
+    letter-spacing: 0.16em;
+    color: var(--linen);
+  }
+  .vow:nth-child(2) { font-family: var(--font-en); font-style: italic; font-size: 1rem; font-weight: 500; letter-spacing: 0.08em;
+    background: var(--linen); border-color: var(--linen); color: var(--forest); }
+
+  /* ---------- 身心靈 ---------- */
+  .soul { text-align: center; padding: 140px 0; }
+  .enso {
+    width: 160px; height: 160px;
+    margin: 0 auto 2.8rem;
+    display: block;
+    overflow: visible;
+  }
+  .enso path {
+    stroke: var(--moss); stroke-width: 5; fill: none; stroke-linecap: round;
+    stroke-dasharray: 440; stroke-dashoffset: 440;
+    transition: stroke-dashoffset 3s cubic-bezier(.6,.1,.3,1);
+  }
+  .enso circle { fill: var(--sun); transform: scale(0); transform-origin: 112px 52px; transition: transform 1s cubic-bezier(.3,1.6,.5,1) 2.4s; }
+  .soul.visible .enso path { stroke-dashoffset: 30; }
+  .soul.visible .enso circle { transform: scale(1); }
+  .soul .label { justify-content: center; }
+  .quote {
+    font-size: clamp(1.3rem, 3vw, 1.9rem);
+    font-weight: 400;
+    color: var(--moss);
+    letter-spacing: 0.25em;
+    line-height: 2.1;
+    margin: 1rem auto 2.4rem;
+  }
+  .soul p.desc { max-width: 620px; margin: 0 auto; color: var(--muted); }
+
+  /* ---------- Footer ---------- */
+  footer {
+    border-top: 1px solid rgba(62,74,61,0.15);
+    padding: 60px 0 70px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  footer .sign {
+    font-family: var(--font-en); font-style: italic; font-weight: 300;
+    font-size: 2.6rem; color: var(--moss); letter-spacing: 0.05em;
+  }
+  footer .sign span { color: var(--sun); font-style: normal; }
+  footer p { font-size: 0.9rem; color: var(--sage); letter-spacing: 0.3em; margin-top: 0.4rem; }
+
+  /* ---------- 進場動畫 ---------- */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1.2s ease, transform 1.2s ease; }
+  .reveal.visible { opacity: 1; transform: none; }
+  .card.reveal.visible:hover { transform: translateY(-8px) rotate(-1.2deg); }
+  .card.reveal.visible:nth-child(even):hover { transform: translateY(-8px) rotate(1.2deg); }
+  .hero .reveal { transition-duration: 1.6s; }
+  .d1 { transition-delay: .15s; } .d2 { transition-delay: .3s; } .d3 { transition-delay: .45s; } .d4 { transition-delay: .6s; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+    .shell-badge, .scroll-hint::after { animation: none; }
+    .enso path { stroke-dashoffset: 30; transition: none; }
+    .enso circle { transform: scale(1); transition: none; }
+  }
+
+  /* ---------- 響應式 ---------- */
+  @media (max-width: 860px) {
+    section { padding: 88px 0; }
+    .about-grid, .decade-grid { grid-template-columns: 1fr; gap: 52px; }
+    .portrait-box { max-width: 330px; margin: 0 auto; width: 100%; }
+    .cards { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .deco.hide-sm { display: none; }
+  }
+  @media (max-width: 560px) {
+    .wrap { padding: 0 20px; }
+    .cards { grid-template-columns: 1fr; }
+    .card { padding: 40px 28px 36px; }
+    .hero-tagline { letter-spacing: 0.2em; }
+    .shell-badge { width: 60px; height: 60px; margin: -30px 0 0 -30px; }
+    .shell-badge svg { width: 34px; height: 34px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- 波西米亞幾何線條圖形定義 -->
+<svg id="boho-defs" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- 半日與光芒 -->
+    <symbol id="boho-sun" viewBox="0 0 120 70">
+      <path d="M30 64 A30 30 0 0 1 90 64"/>
+      <path d="M14 64 H106"/>
+      <path d="M95.7 51 L108.9 46.2 M86.9 37.1 L96.8 27.2 M73 28.3 L77.8 15.1 M60 26 V12 M47 28.3 L42.2 15.1 M33.1 37.1 L23.2 27.2 M24.3 51 L11.1 46.2"/>
+    </symbol>
+    <!-- 三個交疊的雙層菱形 -->
+    <symbol id="boho-diamond" viewBox="0 0 124 84">
+      <path d="M30 4 L52 42 L30 80 L8 42 Z"/>
+      <path d="M30 22 L41 42 L30 62 L19 42 Z"/>
+      <path d="M62 4 L84 42 L62 80 L40 42 Z"/>
+      <path d="M62 22 L73 42 L62 62 L51 42 Z"/>
+      <path d="M94 4 L116 42 L94 80 L72 42 Z"/>
+      <path d="M94 22 L105 42 L94 62 L83 42 Z"/>
+    </symbol>
+    <!-- 鋸齒與圓點 -->
+    <symbol id="boho-zigzag" viewBox="0 0 160 30">
+      <path d="M2 18 L14 6 L26 18 L38 6 L50 18 L62 6 L74 18 L86 6 L98 18 L110 6 L122 18 L134 6 L146 18 L158 6"/>
+      <g fill="currentColor" stroke="none">
+        <circle cx="14" cy="26" r="1.6"/><circle cx="38" cy="26" r="1.6"/><circle cx="62" cy="26" r="1.6"/>
+        <circle cx="86" cy="26" r="1.6"/><circle cx="110" cy="26" r="1.6"/><circle cx="134" cy="26" r="1.6"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<!-- ============ Hero ============ -->
+<header class="hero">
+  <div class="wrap">
+    <svg class="deco hide-sm" viewBox="0 0 120 70" style="right:28px; bottom:0; width:180px; color:#a8805c; opacity:.55;"><use href="#boho-sun"/></svg>
+    <p class="hero-eyebrow reveal">— hello, I am</p>
+    <h1 class="reveal d1">Felicia<span>.</span></h1>
+    <div class="hero-line reveal d2"></div>
+    <p class="hero-tagline reveal d3">在日常裡，溫柔地生活</p>
+    <p class="hero-sub reveal d4">旅人 · 手作者 · 生命的探索者</p>
+  </div>
+
+  <a href="#about" class="scroll-hint">SCROLL</a>
+</header>
+
+<!-- ============ About ============ -->
+<section id="about">
+  <svg class="deco" viewBox="0 0 124 84" style="right:5%; top:56px; width:160px; color:#a8805c; opacity:.55;"><use href="#boho-diamond"/></svg>
+  <svg class="deco hide-sm" viewBox="0 0 160 30" style="left:4%; bottom:44px; width:170px; color:#8a9a82; opacity:.6;"><use href="#boho-zigzag"/></svg>
+
+  <div class="wrap about-grid">
+    <div class="portrait-box reveal">
+      <div class="portrait">
+        <!-- 朝聖之路：通往遠方的小徑、黃色箭頭與旅人 -->
+        <svg viewBox="0 0 300 400" preserveAspectRatio="xMidYMid slice" aria-label="一條蜿蜒通往遠方山丘的小徑，路旁有朝聖之路的黃色箭頭">
+          <defs>
+            <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#efe6cf"/>
+              <stop offset="1" stop-color="#cdd5c2"/>
+            </linearGradient>
+          </defs>
+          <rect width="300" height="400" fill="url(#sky)"/>
+          <circle cx="200" cy="128" r="34" fill="#e9b949"/>
+          <path d="M0 220 C 50 190, 90 200, 130 185 C 170 170, 220 190, 300 175 L300 400 L0 400Z" fill="#a9b49f"/>
+          <path d="M0 262 C 60 235, 120 252, 170 238 C 220 224, 260 240, 300 232 L300 400 L0 400Z" fill="#7d8c75"/>
+          <path d="M0 300 C 70 280, 130 300, 190 286 C 240 274, 270 284, 300 280 L300 400 L0 400Z" fill="#4f5e4c"/>
+          <!-- 小徑 -->
+          <path d="M112 400 C 130 365, 185 345, 168 318 C 152 296, 128 290, 148 270 C 156 262, 160 256, 158 250 L 163 250 C 170 258, 168 266, 162 274 C 148 292, 178 302, 202 322 C 228 345, 214 378, 206 400 Z" fill="#efe9df" opacity=".9"/>
+          <!-- 柏樹 -->
+          <path d="M62 300 C 54 270, 58 240, 66 222 C 74 240, 78 270, 70 300 Z" fill="#2e3d34"/>
+          <path d="M240 286 C 234 266, 237 246, 243 234 C 249 246, 252 266, 246 286 Z" fill="#2e3d34"/>
+          <!-- 旅人 -->
+          <g transform="translate(155 262)" fill="#233029">
+            <circle cx="0" cy="-15" r="3"/>
+            <path d="M-2.5 -11 h5 l1.5 10 h-8 z"/>
+            <path d="M-2 -1 l-2 9 M2 -1 l2 9" stroke="#233029" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M5 -10 l3 18" stroke="#233029" stroke-width="1" stroke-linecap="round"/>
+            <path d="M-5.5 -10 h3 v7 h-3 z" fill="#a8805c"/>
+          </g>
+          <!-- 腳印 -->
+          <g fill="#a8805c" opacity=".55">
+            <ellipse cx="150" cy="378" rx="2.4" ry="4" transform="rotate(-20 150 378)"/>
+            <ellipse cx="160" cy="364" rx="2.4" ry="4" transform="rotate(-25 160 364)"/>
+            <ellipse cx="166" cy="346" rx="2.2" ry="3.6" transform="rotate(-10 166 346)"/>
+            <ellipse cx="172" cy="333" rx="2" ry="3.4" transform="rotate(-5 172 333)"/>
+          </g>
+        </svg>
+        <div class="portrait-caption">Buen Camino</div>
+
+        <!-- 朝聖之路的扇貝殼 -->
+        <div class="shell-badge" title="朝聖之路的扇貝殼">
+          <svg viewBox="0 0 48 48">
+            <path d="M24 40 C 14 34, 6 26, 6 18 C 6 10, 14 6, 24 6 C 34 6, 42 10, 42 18 C 42 26, 34 34, 24 40 Z"/>
+            <path d="M24 40 L10 12 M24 40 L16 7.5 M24 40 V6 M24 40 L32 7.5 M24 40 L38 12"/>
+            <path d="M19 40 h10 l-2 4 h-6 z"/>
+          </svg>
+        </div>
+      </div>
+
+      <div class="camino-note">
+        <span class="tag">
+          <svg viewBox="0 0 24 24"><path d="M3 10h11V5l8 7-8 7v-5H3z"/></svg>
+          Camino de Santiago
+        </span>
+        <p>喜歡走路，用自己的步調感受世界。<br>夢想有一天，走一趟西班牙的朝聖之路。</p>
+      </div>
+    </div>
+
+    <div class="about-text">
+      <div class="label reveal">About me</div>
+      <h2 class="reveal d1">你好，我是 Felicia</h2>
+      <p class="reveal d2">我相信，生活的質感藏在細節裡——一杯手沖的溫度、一盆植物新長的葉子、一盞恰好的燈光，或是旅途中某條無名小巷的午後陽光。</p>
+      <p class="reveal d3">我喜歡用雙手創造，用雙腳丈量世界，也喜歡安靜地向內看。對我來說，<strong>美</strong>不只是外在的樣子，更是一種對待自己、對待他人與萬物的溫柔方式。</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Loves ============ -->
+<section class="loves">
+  <svg class="deco" viewBox="0 0 120 70" style="left:4%; top:52px; width:160px; color:#a8805c; opacity:.5;"><use href="#boho-sun"/></svg>
+  <svg class="deco hide-sm" viewBox="0 0 124 84" style="right:5%; bottom:40px; width:160px; color:#8a9a82; opacity:.6;"><use href="#boho-diamond"/></svg>
+
+  <div class="wrap">
+    <div class="loves-head">
+      <div class="label reveal">Things I love</div>
+      <h2 class="reveal d1">讓我心動的小事</h2>
+    </div>
+
+    <div class="cards">
+      <article class="card reveal">
+        <span class="card-no">01</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="18"/><path d="M24 6v4M24 38v4M6 24h4M38 24h4"/><path d="M30 18l-4 8-8 4 4-8z"/></svg></div>
+        <h3>自助旅行<small>Wandering</small></h3>
+        <p>不趕行程，跟著直覺走。在陌生的街角迷路，常常遇見最美的風景。</p>
+      </article>
+
+      <article class="card reveal d1">
+        <span class="card-no">02</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><path d="M16 44V24a8 8 0 0 1 16 0v20"/><path style="fill:var(--blob)" d="M19 29V14a3.5 3.5 0 0 1 3.5-3.5h3A3.5 3.5 0 0 1 29 14v15c-3 2-7 2-10 0z"/><path d="M22.4 24.5V15"/><path d="M39 8v6M36 11h6"/></svg></div>
+        <h3>美甲<small>Nail Art</small></h3>
+        <p>指尖上的小小畫布，一筆一色，都是給自己的溫柔儀式感。</p>
+      </article>
+
+      <article class="card reveal d2">
+        <span class="card-no">03</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><path d="M14 30h20l-3 12H17z"/><path d="M24 30V16"/><path d="M24 22c-6 0-10-4-10-10 6 0 10 4 10 10z"/><path d="M24 18c0-6 4-10 10-10 0 6-4 10-10 10z"/></svg></div>
+        <h3>綠植<small>Greenery</small></h3>
+        <p>看著它們慢慢長大，學會耐心，也學會生命自有它的節奏。</p>
+      </article>
+
+      <article class="card reveal">
+        <span class="card-no">04</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><path d="M10 26v-6a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v6"/><path d="M6 26h36v8H6z"/><path d="M10 34v5M38 34v5"/><path d="M20 10l4-4 4 4"/></svg></div>
+        <h3>室內軟裝<small>Interior</small></h3>
+        <p>布料、光線與器物的搭配，讓家成為讓身心安放的地方。</p>
+      </article>
+
+      <article class="card reveal d1">
+        <span class="card-no">05</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><path d="M10 20h24v8a10 10 0 0 1-10 10h-4a10 10 0 0 1-10-10z"/><path d="M34 23h3a4 4 0 0 1 0 8h-4"/><path d="M8 42h28"/><path d="M18 8c-2 3 2 5 0 8M26 8c-2 3 2 5 0 8"/></svg></div>
+        <h3>咖啡甜點<small>Café &amp; Sweets</small></h3>
+        <p>午後一杯咖啡、一塊甜點，是生活裡最簡單也最踏實的幸福。</p>
+      </article>
+
+      <article class="card reveal d2">
+        <span class="card-no">06</span>
+        <div class="icon"><svg viewBox="0 0 48 48"><circle cx="20" cy="26" r="12"/><path d="M12 18c5 4 11 4 16 0M10 28c6 3 14 3 20 0M14 36c4-2 8-2 12 0"/><path d="M30 18l10-10M38 6l4 4"/></svg></div>
+        <h3>手作活動<small>Handcraft</small></h3>
+        <p>陶藝、編織、香氛、花藝⋯⋯專注在手心的時刻，心也跟著安靜下來。</p>
+      </article>
+    </div>
+
+    <p class="beauty-note reveal">以及，所有與 <em>美</em> 有關的事物。</p>
+  </div>
+</section>
+
+<!-- ============ Decade ============ -->
+<section class="decade">
+  <svg class="deco" viewBox="0 0 160 30" style="right:5%; top:52px; width:180px; color:#8a9a82; opacity:.45;"><use href="#boho-zigzag"/></svg>
+  <svg class="deco hide-sm" viewBox="0 0 120 70" style="left:5%; bottom:48px; width:160px; color:#a8805c; opacity:.6;"><use href="#boho-sun"/></svg>
+
+  <div class="wrap decade-grid">
+    <div class="big-num reveal">
+      <span class="num" data-n="10">10</span>
+      <span class="unit">年</span>
+    </div>
+    <div class="decade-text">
+      <div class="label reveal">A gentle choice</div>
+      <h2 class="reveal d1">十年，一份溫柔的堅持</h2>
+      <p class="reveal d2">因為環保，也因為愛護動物，我選擇了吃素，並使用無動物實驗的日用品，至今已經十年。</p>
+      <p class="reveal d3">這不是束縛，而是一種日常的修行——在每一次選擇裡，提醒自己與這個世界溫柔共處。</p>
+      <div class="vows reveal d4">
+        <span class="vow">蔬食生活</span>
+        <span class="vow">Cruelty-Free</span>
+        <span class="vow">友善地球</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ Soul ============ -->
+<section class="soul" id="soul">
+  <svg class="deco" viewBox="0 0 160 30" style="left:6%; top:80px; width:170px; color:#a8805c; opacity:.5;"><use href="#boho-zigzag"/></svg>
+  <svg class="deco hide-sm" viewBox="0 0 120 70" style="right:6%; bottom:56px; width:170px; color:#8a9a82; opacity:.6;"><use href="#boho-sun"/></svg>
+
+  <div class="wrap">
+    <svg class="enso" viewBox="0 0 150 150" aria-hidden="true"><path d="M118 40 A 55 55 0 1 0 128 68"/><circle cx="112" cy="52" r="9"/></svg>
+    <div class="label reveal">Mind · Body · Soul</div>
+    <p class="quote reveal d1">向外看見世界，<br>向內遇見自己。</p>
+    <p class="desc reveal d2">我對生命的探討與身心靈充滿好奇。我們從哪裡來、為何而活、如何與自己和解——這些問題沒有標準答案，卻讓每一天的覺察都更有意義。</p>
+  </div>
+</section>
+
+<!-- ============ Footer ============ -->
+<footer>
+  <div class="wrap">
+    <div class="sign">Felicia<span>.</span></div>
+    <p>願你也被世界溫柔以待</p>
+  </div>
+</footer>
+
+<script>
+  // 捲動進場動畫
+  const targets = document.querySelectorAll('.reveal, .soul');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    targets.forEach(t => io.observe(t));
+  } else {
+    targets.forEach(t => t.classList.add('visible'));
+  }
+</script>
+</body>
+</html>
